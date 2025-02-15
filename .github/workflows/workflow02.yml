@@ -1,0 +1,14 @@
+name: Segundo Workflow - Receber ID e executar Echo
+
+on:
+  repository_dispatch:
+    types: [workflow_trigger]
+
+jobs:
+  receber-id:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar ID recebido
+        run: |
+          echo "ID do primeiro workflow recebido: ${{ github.event.client_payload.workflow_id }}"
+        
