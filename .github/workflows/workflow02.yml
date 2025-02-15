@@ -1,6 +1,7 @@
 name: Segundo Workflow - Receber ID e executar Echo
 
-on:
+on: 
+  workflow_dispatch:
   repository_dispatch:
     types: [workflow_trigger]
 
