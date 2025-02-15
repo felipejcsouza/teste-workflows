@@ -1,0 +1,22 @@
+name: Primeiro Workflow - Acionar API 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  acionar_api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Acionar API
+        run: |
+          echo "chamar api"
+        env:
+          API_KEYS: ${{ secrets.API_KEY }}
+      - name: Salvar ID do workflow
+        run: |
+          echo "WORKFLOW_IOD=${{ github.run_id }}
+
+      - name: Exibir ID do Workflow
+        run: |
+          echo "ID do workflow: ${{ env.WORKFLOW_ID }}"
+          
