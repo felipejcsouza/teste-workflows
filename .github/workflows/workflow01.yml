@@ -15,11 +15,11 @@ jobs:
             -d '{
             "event_type": "workflow_trigger",
             "client_payload": {
-            "workflow_id": "'"${{ github.run_id }}"'",
-            "sha": "${{ github.event.pull_request.head.sha }}",
-            "repo": "${{ github.repository }}",
-            "pr_number": "${{ github.event.number }}"
-            }
+              "workflow_id": "${{ github.run_id }}",
+              "sha": "${{ github.event.pull_request.head.sha }}",
+              "repo": "${{ github.repository }}",
+              "pr_number": "${{ github.event.number }}"
+              }
             }'
         env:
           API_KEYS: ${{ secrets.API_KEY }}
