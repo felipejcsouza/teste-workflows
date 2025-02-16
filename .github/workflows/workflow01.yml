@@ -16,7 +16,7 @@ jobs:
             "client_payload": {
             "workflow_id": "'"$WORKFLOW_ID"'"
             }
-  }'
+            }'
         env:
           API_KEYS: ${{ secrets.API_KEY }}
       - name: Salvar ID do workflow
