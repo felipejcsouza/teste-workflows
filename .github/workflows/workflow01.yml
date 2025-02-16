@@ -9,7 +9,14 @@ jobs:
     steps:
       - name: Acionar API
         run: |
-          echo "chamar api"
+          curl -X POST https://api.github.com/repos/felipejcsouza/teste-workflows/dispatches -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GHTK }} " \
+            -d '{
+            "event_type": "workflow_trigger",
+            "client_payload": {
+            "workflow_id": "'"$WORKFLOW_ID"'"
+            }
+  }'
         env:
           API_KEYS: ${{ secrets.API_KEY }}
       - name: Salvar ID do workflow
