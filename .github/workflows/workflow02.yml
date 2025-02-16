@@ -66,4 +66,5 @@ jobs:
               throw error;
             }
       - name: Usar Conclusão
-        run: echo "Conclusão do Workflow: ${{ steps.verificar-status.outputs.conclusion }}"
+        run: echo "Conclusão do Workflow: ${{ steps.verificar-status.outputs.conclusion }}
+
