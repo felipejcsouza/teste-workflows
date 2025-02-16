@@ -39,7 +39,7 @@ jobs:
                 throw new Error(`O Workflow com ID ${workflowId} não foi concluído com sucesso. Conclusão: ${conclusion}`);
               }
               console.log(`O Workflow com ID ${workflowId} foi concluído com sucesso.`);
-              core.setOutput('conclusion', conclusion);  # Set the conclusion as an output
+              core.setOutput('conclusion', conclusion); 
               return conclusion;
             } catch (error) {
               console.error(`Erro ao verificar o status do Workflow: ${error.message}`);
@@ -56,8 +56,8 @@ jobs:
                 owner,
                 repo,
                 sha,
-                state: "success",  # Pode ser "success", "failure" ou "pending"
-                context: "Processamento Externo Concluído",  # Nome do status check
+                state: "success", 
+                context: "receber-id",  
                 description: "A API externa concluiu o processamento.",
               });
               console.log("Status check criado com sucesso.");
@@ -66,5 +66,7 @@ jobs:
               throw error;
             }
       - name: Usar Conclusão
-        run: echo "Conclusão do Workflow: ${{ steps.verificar-status.outputs.conclusion }}"
+        run: |
+          echo "Conclusão do Workflow: ${{ steps.verificar-status.outputs.conclusion }}"
+  
 
