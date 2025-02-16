@@ -54,7 +54,7 @@ jobs:
         with:
           script: |
             const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-            const sha = "${{ github.event.client_payload.sha }}";  # SHA do commit do PR
+            const sha = "${{ github.event.client_payload.sha }}"; 
 
             await github.rest.repos.createCommitStatus({
               owner,
