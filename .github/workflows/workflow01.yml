@@ -14,7 +14,7 @@ jobs:
             -d '{
             "event_type": "workflow_trigger",
             "client_payload": {
-            "workflow_id": "'"$WORKFLOW_ID"'"
+            "workflow_id": "'"${{ github.run_id }}""'"
             }
             }'
         env:
