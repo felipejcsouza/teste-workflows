@@ -12,7 +12,23 @@ jobs:
       - name: Verificar ID recebido
         run: |
           echo "ID do primeiro workflow recebido: ${{ github.event.client_payload.workflow_id }}"
-        
+          
+      - name: Criar Status Check
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+            const sha = "${{ github.event.client_payload.sha }}";  # SHA do commit do PR
+
+            await github.rest.repos.createCommitStatus({
+              owner,
+              repo,
+              sha,
+              state: "success",  # Pode ser "success", "failure" ou "pending"
+              context: "Processamento Externo Concluído",  # Nome do status check
+              description: "A API externa concluiu o processamento.",
+            });
+            
       - name: Verificar status do Workflow
         id: verificar-status
         uses: actions/github-script@v6
