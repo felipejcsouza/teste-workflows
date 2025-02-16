@@ -45,26 +45,17 @@ jobs:
               console.error(`Erro ao verificar o status do Workflow: ${error.message}`);
               throw error;
             }
-      - name: Criar Status Check
-        uses: actions/github-script@v6
+            
+      - name: Send status to PR
+        uses: jbuettnerbild/send-job-status-to-pr-action@v1
         with:
-          script: |
-            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-            const sha = "${{ github.event.client_payload.sha }}"; 
-            try {
-              await github.rest.repos.createCommitStatus({
-                owner,
-                repo,
-                sha,
-                state: "success", 
-                context: "receber-id",  
-                description: "A API externa concluiu o processamento.",
-              });
-              console.log("Status check criado com sucesso.");
-            } catch (error) {
-              console.error("Erro ao criar status check:", error);
-              throw error;
-            }
+          state: "${{ job.status }}"
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          description: "The build result is: ${{ job.status }}"
+          context: "receber-id"
+          repository: "${{ github.repository }}"
+          github_token: "${{ secrets.GHTK }}"
+          sha: "${{ github.event.client_payload.sha }}"
       - name: Usar Conclusão
         run: |
           echo "Conclusão do Workflow: ${{ steps.verificar-status.outputs.conclusion }}"
