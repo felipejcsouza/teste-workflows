@@ -13,3 +13,39 @@ jobs:
         run: |
           echo "ID do primeiro workflow recebido: ${{ github.event.client_payload.workflow_id }}"
         
+      - name: Verificar status do Workflow
+        id: verificar-status
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const workflowId = "${{ github.event.client_payload.workflow_id }}";
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+
+            try {
+              const response = await github.rest.actions.getWorkflowRun({
+                owner,
+                repo,
+                run_id: workflowId,
+              });
+
+              const status = response.data.status;
+              const conclusion = response.data.conclusion;
+
+              console.log(`Status do Workflow: ${status}`);
+              console.log(`Conclusão do Workflow: ${conclusion}`);
+
+              if (status !== "completed") {
+                throw new Error(`O Workflow com ID ${workflowId} ainda está em execução.`);
+              }
+
+              if (conclusion !== "success") {
+                throw new Error(`O Workflow com ID ${workflowId} não foi concluído com sucesso. Conclusão: ${conclusion}`);
+              }
+
+              console.log(`O Workflow com ID ${workflowId} foi concluído com sucesso.`);
+              return conclusion;
+
+            } catch (error) {
+              console.error(`Erro ao verificar o status do Workflow: ${error.message}`);
+              throw error;
+            }
