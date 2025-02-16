@@ -1,7 +1,9 @@
 name: Primeiro Workflow - Acionar API 
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches: 
+      - main
 
 jobs:
   acionar_api:
