@@ -1,7 +1,8 @@
 name: Primeiro Workflow - Acionar API 
 
 on:
-  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   acionar_api:
@@ -14,7 +15,10 @@ jobs:
             -d '{
             "event_type": "workflow_trigger",
             "client_payload": {
-            "workflow_id": "'"${{ github.run_id }}"'"
+            "workflow_id": "'"${{ github.run_id }}"'",
+            "sha": "${{ github.event.pull_request.head.sha }}",
+            "repo": "${{ github.repository }}",
+            "pr_number": "${{ github.event.number }}"
             }
             }'
         env:
