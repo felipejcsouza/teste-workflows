@@ -11,6 +11,8 @@ jobs:
       - name: Verificar ID recebido
         run: |
           echo "ID do primeiro workflow recebido: ${{ github.event.client_payload.workflow_id }}"
+          echo "SHA recebido: ${{ github.event.client_payload.sha }}"
+          echo "PR Number: ${{ github.event.client_payload.pr_number }}"
 
       - name: Verificar status do Workflow
         id: verificar-status
